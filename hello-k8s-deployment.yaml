@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
       - name: hello-pod
-        image: hello-python:1.0
+        image: hello-python:latest
         imagePullPolicy: IfNotPresent
