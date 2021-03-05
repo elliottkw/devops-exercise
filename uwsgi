@@ -1,0 +1,56 @@
+#!/bin/sh
+ 
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+NAME=uWSGI
+DESC="uWSGI socket daemon"
+PIDFILE="/var/run/${NAME}.pid"
+LOGFILE="/var/log/${NAME}.log"
+
+#Indicate execute
+DAEMON="/usr/local/bin/uwsgi"
+
+#Arguments
+DAEMON_ARGS="--ini"
+
+#Path to work directory
+WORK_DIR="/"
+
+#Path the executable file
+DAEMON_OPTS="uwsgi.ini"
+ 
+#START_OPTS="--chuid=$USER:$GROUP --chdir=$WORK_DIR  --start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_ARGS} ${DAEMON_OPTS}"
+START_OPTS="--chdir=$WORK_DIR  --start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_ARGS} ${DAEMON_OPTS}"
+STOP_OPTS="--stop --pidfile ${PIDFILE}"
+ 
+test -x $DAEMON || exit 0
+ 
+set -e
+ 
+case "$1" in
+    start)
+        echo -n "Starting ${DESC}: "
+        start-stop-daemon $START_OPTS >> $LOGFILE
+        echo "$NAME."
+        ;;
+    stop)
+        echo -n "Stopping $DESC: "
+        start-stop-daemon $STOP_OPTS
+        echo "$NAME."
+        rm -f $PIDFILE
+        ;;
+    restart|force-reload)
+        echo -n "Restarting $DESC: "
+        start-stop-daemon $STOP_OPTS
+        sleep 1
+        start-stop-daemon $START_OPTS >> $LOGFILE
+        echo "$NAME."
+        ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|force-reload}" >&2
+        exit 1
+        ;;
+esac
+ 
+exit 0
