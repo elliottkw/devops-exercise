@@ -10,6 +10,9 @@ jobs:
     steps:
     - name: Download Repo
       uses: actions/checkout@v2
+    - name: Hello world action step
+      uses: ./hello-python
+      id: hello
     - name: Build and Push to DockerHub
       uses: docker/build-push-action@v1
       with:

@@ -1,0 +1,5 @@
+name: 'Hello World'
+description: 'Run Hello in Python'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
