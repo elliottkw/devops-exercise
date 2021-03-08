@@ -1,12 +1,16 @@
+# GitHub Action Flow
 name: Publish to DockerHub
 on:
+  # Trigger to master branch commit only.
   push:
     branches:
       - master
 jobs:
+  # Flow
   push-dockerhub:
     name: Push Docker Image to DockerHub
     runs-on: ubuntu-latest
+    #Actions
     steps:
     - name: Download Repo
       uses: actions/checkout@v2
@@ -16,6 +20,7 @@ jobs:
     - name: Build and Push to DockerHub
       uses: docker/build-push-action@v1
       with:
+        # Credentials to publish in dockerhub
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         repository: elliottkw/hello-python

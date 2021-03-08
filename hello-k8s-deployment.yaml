@@ -1,15 +1,20 @@
+# Deploymenent and the Pod app.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-k8s
+  # Tag to filter searches.
   labels:
     app: hello-deployment
 spec:
+  # Revision history to revert in case of failure.
   revisionHistoryLimit: 5
+  # Number of replicas for HA.
   replicas: 3
   selector:
     matchLabels:
       app: hello-pod
+  # Container for the execution of the app.
   template:
     metadata:
       labels:
@@ -18,4 +23,5 @@ spec:
       containers:
       - name: hello-pod
         image: hello-python:latest
+        # Looking for a local image first.
         imagePullPolicy: IfNotPresent

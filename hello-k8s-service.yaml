@@ -1,14 +1,18 @@
+# Service for de Cluster.
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-k8s
+  # Tag to filter searches.
   labels:
     app: hello-service
 spec:
+  # Exposing the output port for the service.
   type: NodePort
+  # Match to the pod.
   selector:
     app: hello-pod
   ports:
     - protocol: TCP
-      port: 5000
-      nodePort: 30500
+      port: 5000 #Port of the app.
+      nodePort: 30500 # # Ouput port.
