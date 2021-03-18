@@ -58,3 +58,5 @@ Spend some time on designing your solution. Think about operational use cases fr
 
 - [Run a Stateless Application Using a Deployment](https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/)
 
+## Test trigger
+
